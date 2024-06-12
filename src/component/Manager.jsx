@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { useRef, useEffect } from "react";
+import { useRef} from "react";
 import { useState } from "react";
 const Manager = () => {
   const ref = useRef();
   const [form, setform] = useState({ site: "", username: "", password: "" });
-  const [passwordArray, setpasswordArray] = useState([]);
+  const [passwordArray, setPasswordArray] = useState([]);
 
   useEffect(() => {
     let passwords = localStorage.getItem("passwords");
     if (passwords) {
-      setpasswordArray = JSON.parse(passwords);
+      setPasswordArray(JSON.parse(passwords));
     }
   }, []);
 
@@ -23,7 +23,7 @@ const Manager = () => {
   };
 
   const savePassword = () => {
-    setpasswordArray([...passwordArray, form]);
+    setPasswordArray([...passwordArray, form]);
     localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
   };
 
@@ -31,7 +31,6 @@ const Manager = () => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
 
-  e.target;
   return (
     <>
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
@@ -42,10 +41,10 @@ const Manager = () => {
         <h1 className="text-4x1 text font-bold text-center py-4">
           <span className="text-green-700 text-xl">&lt;</span>
           <span className="text-xl">Pass</span>
-          <span className="text-green-700 text-xl">OP/&gt;</span>
+          <span className="text-green-700 text-xl">Safe/&gt;</span>
         </h1>
         <p className="text-green-900 text-lg text-center">
-          Your own secure Password Manager
+        "Streamlined Security for Your Online Life"
         </p>
         <div className="flex flex-col p-4 text-black gap-8 items-center">
           <input
@@ -98,35 +97,30 @@ const Manager = () => {
           </button>
         </div>
         <div className="passwords">
-          <h2>Your Passwords</h2>
-          <table>
-            <table className="table-auto">
-              <thead>
+          <h2 className="py-2 ml-2 font-bold text-xl ">Your Passwords</h2>
+          {passwordArray.length===0 && <div>No passwords to show </div>}
+            {passwordArray.length!=0 && <table className="table-auto w-full rounded-md overflow-hidden">
+              <thead className='bg-slate-800 text-white'>
                 <tr>
-                  <th>Song</th>
-                  <th>Artist</th>
-                  <th>Year</th>
+                  <th className='py-2'>Site</th>
+                  <th className='py-2'>Username</th>
+                  <th className='py-2'>Password</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                  <td>Malcolm Lockyer</td>
-                  <td>1961</td>
+              <tbody className ='bg-[#eff6ff]'>
+                {passwordArray.map((item,index)=>{
+                  return <tr key={index}>
+                  <td className='py-2 border border-white text-center w-32'> <a href={item.site.startsWith('http') ? item.site : `http://${item.site}`} target="_blank" rel="noopener noreferrer">
+                {item.site}
+              </a></td>
+                  <td className='py-2 border border-white text-center w-32'>{item.username}</td>
+                  <td className='py-2 border border-white text-center w-32'>{item.password}</td>
                 </tr>
-                <tr>
-                  <td>Witchy Woman</td>
-                  <td>The Eagles</td>
-                  <td>1972</td>
-                </tr>
-                <tr>
-                  <td>Shining Star</td>
-                  <td>Earth, Wind, and Fire</td>
-                  <td>1975</td>
-                </tr>
+                })}
+              
+
               </tbody>
-            </table>
-          </table>
+            </table>}
         </div>
       </div>
     </>
