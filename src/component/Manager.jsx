@@ -6,6 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
+import { v4 as uuidv4 } from 'uuid';
+
 const Manager = () => {
   const ref = useRef();
   const passwordRef = useRef();
@@ -44,9 +46,23 @@ const Manager = () => {
   };
 
   const savePassword = () => {
-    setPasswordArray([...passwordArray, form]);
-    localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
+    setPasswordArray([...passwordArray, {...form,id: uuidv4()}]);
+    localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form,id: uuidv4()}]));
   };
+
+  const deletePassword = () => {
+    let c = confirm("Do you really want to delete the password?")
+    if(c)
+      {
+    setPasswordArray(passwordArray.filter(item=>item.id!==id))
+    localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item=>item.id!==id)));
+      }
+  };
+
+  const editPassword = (id)=>{
+    setform(passwordArray.filter(i=>i.id===id)[0])
+    setPasswordArray(passwordArray.filter(item=>item.id!==id))
+  }
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
@@ -141,6 +157,7 @@ const Manager = () => {
                   <th className="py-2">Site</th>
                   <th className="py-2">Username</th>
                   <th className="py-2">Password</th>
+                  <th className="py2">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-[#eff6ff]">
