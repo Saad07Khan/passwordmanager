@@ -4,13 +4,13 @@ A secure password management application built with React frontend and Node.js b
 
 ## Features
 
-- ✅ Add, edit, and delete passwords
-- ✅ Secure password storage in MongoDB
-- ✅ Copy passwords to clipboard
-- ✅ Show/hide password functionality
-- ✅ Modern UI with Tailwind CSS
-- ✅ Toast notifications
-- ✅ Responsive design
+-  Add, edit, and delete passwords
+-  Secure password storage in MongoDB
+-  Copy passwords to clipboard
+-  Show/hide password functionality
+-  Modern UI with Tailwind CSS
+-  Toast notifications
+-  Responsive design
 
 ## Prerequisites
 
